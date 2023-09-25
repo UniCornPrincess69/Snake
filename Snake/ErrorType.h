@@ -4,6 +4,7 @@
 enum class ErrorType : char
 {
 	ET_SUCCESS = 0,
+	ET_PTR_NOT_INSTANTIATED,
 	ET_COUNT
 };
 

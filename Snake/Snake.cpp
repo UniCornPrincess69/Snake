@@ -2,12 +2,35 @@
 //
 
 #include <iostream>
+#include "Game.h"
+#include "ErrorType.h"
+
+CGame* m_pGame = nullptr;
+bool m_bGameStarted = true;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	auto result = ErrorType::ET_SUCCESS;
+	
+	//Initialize
+	if (m_pGame == nullptr) m_pGame = new CGame(m_bGameStarted);
+	else result = ErrorType::ET_PTR_NOT_INSTANTIATED;
+	if (result != ErrorType::ET_SUCCESS) return static_cast<int>(result);
 
-    //TODO: Marcus fragen wegen InstantiateMembers() OVL!!!
+	//Run
+	m_pGame->Initialize();
+	m_pGame->Run();
+	m_pGame->Finalize();
+
+	//Finalize
+	if (m_pGame != nullptr)
+	{
+		delete m_pGame;
+		m_pGame = nullptr;
+	}
+
+
+	return static_cast<int>(result);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
