@@ -3,6 +3,7 @@
 
 #include "ErrorType.h"
 #include "Player.h"
+#include "Vector2.h"
 #include <vector>
 
 
@@ -12,7 +13,7 @@ class CGameBoard
 {
 	enum class TileType : char
 	{
-		TT_NONE ,TT_GROUND, TT_WALL, TT_SNAKE, TT_PICKUP, TT_COUNT,
+		TT_NONE , TT_WALL, TT_SNAKE, TT_PICKUP, TT_COUNT,
 	};
 
 public:
@@ -29,13 +30,17 @@ public:
 private:
 	void InstantiateBoard(void);
 	void PlacePickup(void);
+	const int RandomNumber(int);
 
 private:
 	int m_iHeight = 0;
 	int m_iWidth = 0;
+	bool m_bIsPickupPresent = false;
 	CPlayer* m_pPlayer = nullptr;
+	Vector2* m_pPickupPos = nullptr;
 
 	std::vector<std::vector<TileType>> m_tileMap = {};
+	std::vector<Vector2> m_snakeBody = {};
 };
 
 

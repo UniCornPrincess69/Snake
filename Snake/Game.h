@@ -1,14 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "IDevice.h"
+#include "IObject.h"
 
 #include "GameBoard.h"
 #include "InputHandler.h"
 #include "Player.h"
 
 
-class CGame : IDevice
+class CGame : IObject
 {
 	/*
 	Ctor/Dtor
@@ -29,9 +29,9 @@ private:
 	bool CheckValue(int);
 
 public:
-	virtual void Initialize(void) override;
+	virtual const int Initialize(void) override;
 	virtual void Finalize(void) override;
-	virtual ErrorType Run(void) override;
+	virtual const ErrorType Run(void) override;
 
 private:
 	const int M_I_WIDTH = 0;

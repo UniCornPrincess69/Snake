@@ -1,15 +1,22 @@
 #ifndef INPUT_HANDLER_H
 #define INPUT_HANDLER_H
 
-#include "IDevice.h"
+#include "IObject.h"
+#include "Player.h"
 
-class CInputHandler : IDevice
+class CInputHandler : IObject
 {
-	// Inherited via IDevice
 public:
-	virtual void Initialize(void) override;
+
+	// Inherited via IObject
+	virtual const int Initialize(void) override;
 	virtual void Finalize(void) override;
-	virtual ErrorType Run(void) override;
+	virtual const ErrorType Run(void) override;
+
+private:
+	using Keycode = unsigned int;
+	CPlayer* m_pPlayer = nullptr;
+
 };
 
 #endif // !INPUT_HANDLER_H

@@ -1,14 +1,17 @@
 #include "InputHandler.h"
 
-void CInputHandler::Initialize(void)
+
+const int CInputHandler::Initialize(void)
 {
+    return 0;
 }
 
 void CInputHandler::Finalize(void)
 {
+    return void();
 }
 
-ErrorType CInputHandler::Run(void)
+const ErrorType CInputHandler::Run(void)
 {
     return ErrorType();
 }

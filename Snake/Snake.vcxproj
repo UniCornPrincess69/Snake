@@ -138,8 +138,9 @@
     <ClInclude Include="ErrorType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBoard.h" />
-    <ClInclude Include="IDevice.h" />
+    <ClInclude Include="IObject.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

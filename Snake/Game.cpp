@@ -1,12 +1,14 @@
 #include "Game.h"
 #include <iostream>
 
-void CGame::Initialize(void)
+const int CGame::Initialize(void)
 {
 	Introduction();
 	if (m_pGameBoard != nullptr) m_pGameBoard->Initialize();
 	if (m_pPlayer != nullptr) m_pPlayer->Initialize();
 	if (m_pInputHandler != nullptr) m_pInputHandler->Initialize();
+
+	return 0;
 }
 
 void CGame::Finalize(void)
@@ -30,7 +32,7 @@ void CGame::Finalize(void)
 	}
 }
 
-ErrorType CGame::Run(void)
+const ErrorType CGame::Run(void)
 {
 	auto result = static_cast<ErrorType>(ErrorType::ET_SUCCESS);
 	while (m_bIsRunning)
@@ -70,8 +72,8 @@ void CGame::Introduction(void)
 		else break;
 	}
 	system("CLS");
-	if (m_pGameBoard == nullptr) m_pGameBoard = new CGameBoard(iInputHeight, iInputWidth, m_pPlayer);
 	if (m_pPlayer == nullptr) m_pPlayer = new CPlayer(iInputWidth / 2, iInputHeight / 2);
+	if (m_pGameBoard == nullptr) m_pGameBoard = new CGameBoard(iInputHeight, iInputWidth, m_pPlayer);
 }
 
 bool CGame::CheckValue(int val)
