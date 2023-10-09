@@ -20,7 +20,7 @@ const int CPlayer::Initialize(void)
 {
     m_bodyParts = std::vector<Vector2>();
     m_bodyParts.push_back(*m_pPlayerPos);
-    if (m_pPickupPos == nullptr)  
+    if (m_pPickupPos == nullptr) 
     return 0;
 }
 

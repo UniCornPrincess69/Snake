@@ -27,6 +27,7 @@ public:
 private:
 	void Introduction(void);
 	bool CheckValue(int);
+	void GameOver(void);
 
 public:
 	virtual const int Initialize(void) override;

@@ -13,7 +13,7 @@ class CGameBoard
 {
 	enum class TileType : char
 	{
-		TT_NONE , TT_WALL, TT_SNAKE, TT_PICKUP, TT_COUNT,
+		TT_NONE , TT_GROUND, TT_WALL, TT_SNAKE, TT_PICKUP, TT_COUNT,
 	};
 
 public:
@@ -26,6 +26,7 @@ public:
 
 	void Initialize(void);
 	ErrorType Draw(void);
+	void SetSeed(unsigned int);
 
 private:
 	void InstantiateBoard(void);
@@ -35,6 +36,7 @@ private:
 private:
 	int m_iHeight = 0;
 	int m_iWidth = 0;
+	unsigned int m_iSeed = 0;
 	bool m_bIsPickupPresent = false;
 	CPlayer* m_pPlayer = nullptr;
 	Vector2* m_pPickupPos = nullptr;

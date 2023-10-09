@@ -1,44 +1,32 @@
 #include "Game.h"
+#include "Utils.h"
 #include <iostream>
 
 const int CGame::Initialize(void)
 {
 	Introduction();
-	if (m_pGameBoard != nullptr) m_pGameBoard->Initialize();
 	if (m_pPlayer != nullptr) m_pPlayer->Initialize();
+	if (m_pGameBoard != nullptr) m_pGameBoard->Initialize();
+	if (m_pInputHandler == nullptr) m_pInputHandler = new CInputHandler(m_pPlayer);
 	if (m_pInputHandler != nullptr) m_pInputHandler->Initialize();
 
 	return 0;
 }
 
 void CGame::Finalize(void)
-{ 
-	if (m_pInputHandler != nullptr)
-	{
-		delete m_pInputHandler;
-		m_pInputHandler = nullptr;
-	}
-
-	if (m_pPlayer != nullptr)
-	{
-		delete m_pPlayer;
-		m_pPlayer = nullptr;
-	}
-
-	if (m_pGameBoard != nullptr)
-	{
-		delete m_pGameBoard;
-		m_pGameBoard = nullptr;
-	}
+{
+	DeletePointer(m_pInputHandler);
+	DeletePointer(m_pPlayer);
+	DeletePointer(m_pGameBoard);
 }
 
 const ErrorType CGame::Run(void)
 {
 	auto result = static_cast<ErrorType>(ErrorType::ET_SUCCESS);
+	m_pGameBoard->Draw();
 	while (m_bIsRunning)
 	{
 		m_pInputHandler->Run();
-		m_pGameBoard->Draw();
 	}
 	return result;
 }
@@ -74,9 +62,32 @@ void CGame::Introduction(void)
 	system("CLS");
 	if (m_pPlayer == nullptr) m_pPlayer = new CPlayer(iInputWidth / 2, iInputHeight / 2);
 	if (m_pGameBoard == nullptr) m_pGameBoard = new CGameBoard(iInputHeight, iInputWidth, m_pPlayer);
+
+	auto iSeedInput = static_cast<unsigned int>(0);
+	while (true)
+	{
+		std::cout << "At last please insert a number between 0 and 100!" << std::endl;
+		std::cout << "This is for game magic in the background ;P" << std::endl;
+		std::cin >> iSeedInput;
+		if (0 > iSeedInput || iSeedInput > 100)
+		{
+			system("CLS");
+			std::cout << "Invalid value. Please try again!" << std::endl;
+		}
+		else break;
+	}
+	m_pGameBoard->SetSeed(iSeedInput);
 }
 
 bool CGame::CheckValue(int val)
 {
 	return (val < M_I_MIN || val > M_I_MAX);
 }
+
+void CGame::GameOver(void)
+{
+	system("CLS");
+
+
+}
+

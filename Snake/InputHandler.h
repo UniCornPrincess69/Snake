@@ -7,6 +7,8 @@
 class CInputHandler : IObject
 {
 public:
+	inline CInputHandler(CPlayer* a_pPlayer) : m_pPlayer(a_pPlayer)
+	{}
 
 	// Inherited via IObject
 	virtual const int Initialize(void) override;
