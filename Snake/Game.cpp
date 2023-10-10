@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Utils.h"
+#include <Windows.h>
 #include <iostream>
 
 const int CGame::Initialize(void)
@@ -27,6 +28,8 @@ const ErrorType CGame::Run(void)
 	while (m_bIsRunning)
 	{
 		m_pInputHandler->Run();
+		m_pGameBoard->Draw();
+		Sleep(500);
 	}
 	return result;
 }

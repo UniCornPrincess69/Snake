@@ -6,6 +6,8 @@
 
 class CInputHandler : IObject
 {
+
+	
 public:
 	inline CInputHandler(CPlayer* a_pPlayer) : m_pPlayer(a_pPlayer)
 	{}
@@ -16,9 +18,16 @@ public:
 	virtual const ErrorType Run(void) override;
 
 private:
+	const unsigned int ReadKey(void) const;
+
+private:
 	using Keycode = unsigned int;
 	CPlayer* m_pPlayer = nullptr;
-
+	Keycode m_iCurrent = -1;
+	const unsigned int M_I_DEFAULT = 0;
+	const unsigned int M_I_BIT = 8;
+	const unsigned int M_I_BYTE = 256;
+	
 };
 
 #endif // !INPUT_HANDLER_H

@@ -38,7 +38,7 @@ private:
 	const int M_I_WIDTH = 0;
 	const int M_I_HEIGHT = 0;
 	const int M_I_MIN = 20;
-	const int M_I_MAX = 60;
+	const int M_I_MAX = 40;
 
 	bool m_bIsRunning = false;
 	CPlayer* m_pPlayer = nullptr;

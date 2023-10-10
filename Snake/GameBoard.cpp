@@ -9,9 +9,9 @@ void CGameBoard::Initialize(void)
 	if (m_pPlayer != nullptr) m_pPlayer->SetPickupPos(m_pPickupPos);
 	if (m_pPlayer != nullptr) m_snakeBody = m_pPlayer->GetSnakeBody();
 
-	for (int x = 0; x < m_tileMap.size(); x++)
+	for (int y = 0; y < m_tileMap.size(); y++)
 	{
-		for (int y = 0; y < m_tileMap[x].size(); y++)
+		for (int x = 0; x < m_tileMap[y].size(); x++)
 		{
 			if (x == 0 || y == 0 ||
 				x == m_tileMap.size() - 1 ||
@@ -19,20 +19,28 @@ void CGameBoard::Initialize(void)
 			{
 				m_tileMap[x][y] = TileType::TT_WALL;
 			}
-			else if (m_snakeBody[m_snakeBody.size() - 1].m_iX ==
-				x && m_snakeBody[m_snakeBody.size() - 1].m_iY == y/*x == m_pPlayer->GetPosition()->m_iX &&
-				y == m_pPlayer->GetPosition()->m_iY*/)
+			/*else if (m_snakeBody[m_snakeBody.size() - 1].m_iX ==
+				x && m_snakeBody[m_snakeBody.size() - 1].m_iY == y)
 			{
 				m_tileMap[x][y] = TileType::TT_SNAKE;
-			}
+			}*/
 			else if (x == m_pPickupPos->m_iX &&
 				y == m_pPickupPos->m_iY)
 			{
 				m_tileMap[x][y] = TileType::TT_PICKUP;
+				m_bIsPickupPresent = true;
 			}
 			else
 			{
 				m_tileMap[x][y] = TileType::TT_GROUND;
+			}
+
+			for (int i = 0; i < m_snakeBody.size(); i++)
+			{
+				if (m_snakeBody[i].m_iX == x && m_snakeBody[i].m_iY == y)
+				{
+					m_tileMap[x][y] = TileType::TT_SNAKE;
+				}
 			}
 		}
 	}
@@ -42,11 +50,19 @@ ErrorType CGameBoard::Draw(void)
 {
 	system("CLS");
 
+	Initialize();
+
 	ErrorType result = ErrorType::ET_SUCCESS;
 
-	for (int x = 0; x < m_tileMap.size(); x++)
+	if (!m_pPlayer->GetHasPickup())
 	{
-		for (int y = 0; y < m_tileMap[x].size(); y++)
+		PlacePickup();
+		m_pPlayer->SetHasPickup(m_bIsPickupPresent);
+	}
+
+	for (int y = 0; y < m_tileMap.size(); y++)
+	{
+		for (int x = 0; x < m_tileMap[y].size(); x++)
 		{
 			switch (m_tileMap[x][y])
 			{
@@ -77,8 +93,9 @@ ErrorType CGameBoard::Draw(void)
 		std::cout << std::endl;
 	}
 
-	return ErrorType();
+	return result;
 }
+
 
 void CGameBoard::SetSeed(unsigned int a_iSeed)
 {
@@ -109,5 +126,6 @@ const int CGameBoard::RandomNumber(int a_iPosCoord)
 {
 	srand(m_iSeed);
 	m_iSeed++;
-	return 1 + (rand() % (a_iPosCoord - 1));
+	//start punkt; rand(); range
+	return 1 + (rand() % (a_iPosCoord - 2));
 }
