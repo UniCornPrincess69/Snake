@@ -19,11 +19,6 @@ void CGameBoard::Initialize(void)
 			{
 				m_tileMap[x][y] = TileType::TT_WALL;
 			}
-			/*else if (m_snakeBody[m_snakeBody.size() - 1].m_iX ==
-				x && m_snakeBody[m_snakeBody.size() - 1].m_iY == y)
-			{
-				m_tileMap[x][y] = TileType::TT_SNAKE;
-			}*/
 			else if (x == m_pPickupPos->m_iX &&
 				y == m_pPickupPos->m_iY)
 			{
@@ -45,7 +40,7 @@ void CGameBoard::Initialize(void)
 		}
 	}
 }
-
+//Drawing of the gameboard
 ErrorType CGameBoard::Draw(void)
 {
 	system("CLS");
@@ -96,30 +91,60 @@ ErrorType CGameBoard::Draw(void)
 	return result;
 }
 
-
+//Setting the seed for the Pickup to be randomized
 void CGameBoard::SetSeed(unsigned int a_iSeed)
 {
 	m_iSeed = a_iSeed;
 }
 
+//Check if the snake has run into the wall or itself
+const bool CGameBoard::CheckGameOver(void) const
+{
+	auto playerPos = m_pPlayer->GetPosition();
+	auto bodyPos = m_pPlayer->GetSnakeBody();
+
+	if (m_tileMap[playerPos->m_iY][playerPos->m_iX] == TileType::TT_WALL) return true;
+
+	for (int i = bodyPos.size() - 1; i > 0; i--)
+	{
+		if (playerPos->m_iX == bodyPos[i].m_iX && playerPos->m_iY == bodyPos[i].m_iY) return true;
+	}
+
+	
+	return false;
+}
+
+
 void CGameBoard::InstantiateBoard(void)
 {
 	m_tileMap = std::vector<std::vector<TileType>>();
 
-	for (int x = 0; x < m_iWidth; x++)
+	for (int y = 0; y < m_iWidth; y++)
 	{
 		m_tileMap.push_back(std::vector<TileType>());
-		for (int y = 0; y < m_iHeight; y++)
+		for (int x = 0; x < m_iHeight; x++)
 		{
-			m_tileMap[x].push_back(TileType::TT_NONE);
+			m_tileMap[y].push_back(TileType::TT_NONE);
 		}
 	}
 }
 
+//Placing the pickup randomly with check to not place it inside of the snake body
 void CGameBoard::PlacePickup(void)
 {
 	m_pPickupPos->m_iX = RandomNumber(m_iWidth);
 	m_pPickupPos->m_iY = RandomNumber(m_iHeight);
+	
+	auto bodyParts = m_pPlayer->GetSnakeBody();
+
+	for (int i = 0; i < bodyParts.size(); i++)
+	{
+		if (m_pPickupPos->m_iX == bodyParts[i].m_iX && 
+			m_pPickupPos->m_iY == bodyParts[i].m_iY)
+		{
+			PlacePickup();
+		}
+	}
 }
 
 const int CGameBoard::RandomNumber(int a_iPosCoord)

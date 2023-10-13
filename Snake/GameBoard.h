@@ -27,6 +27,7 @@ public:
 	void Initialize(void);
 	ErrorType Draw(void);
 	void SetSeed(unsigned int);
+	const bool CheckGameOver(void) const;
 
 private:
 	void InstantiateBoard(void);

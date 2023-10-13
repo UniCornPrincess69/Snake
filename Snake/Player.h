@@ -7,12 +7,12 @@
 #include <vector>
 
 
-class CPlayer : IObject
+class CPlayer
 {
 public:
 	enum class Direction
 	{
-		D_NONE = 81,
+		D_NONE = 27,
 		D_DEFAULT = 0,
 		D_LEFT = 37,
 		D_UP,
@@ -35,9 +35,8 @@ public:
 	inline void SetPickupPos(const Vector2* a_pPickupPos) { m_pPickupPos = const_cast<Vector2*>(a_pPickupPos); };
 
 	// Inherited via IObject
-	virtual const int Initialize(void) override;
-	virtual void Finalize(void) override;
-	virtual const ErrorType Run(void) override;
+	const int Initialize(void);
+	const ErrorType Run(void);
 
 private:
 

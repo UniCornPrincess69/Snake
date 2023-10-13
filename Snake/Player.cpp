@@ -20,8 +20,15 @@ void CPlayer::SetHasPickup(const bool& a_bIsPickUpPresent)
 	m_bIsPickupPresent = a_bIsPickUpPresent;
 }
 
+//Setting the direction in which the snake will move.
+//Control step so that the snake can't go back on itself.
 void CPlayer::SetDirection(const unsigned int& a_iKey)
 {
+	if (m_CurrentDirection == Direction::D_UP && (Direction)a_iKey == Direction::D_DOWN) return;
+	if (m_CurrentDirection == Direction::D_DOWN && (Direction)a_iKey == Direction::D_UP) return;
+	if (m_CurrentDirection == Direction::D_RIGHT && (Direction)a_iKey == Direction::D_LEFT) return;
+	if (m_CurrentDirection == Direction::D_LEFT && (Direction)a_iKey == Direction::D_RIGHT) return;
+	
 	switch (a_iKey)
 	{
 	case static_cast<unsigned int>(Direction::D_LEFT):
@@ -40,6 +47,10 @@ void CPlayer::SetDirection(const unsigned int& a_iKey)
 		m_CurrentDirection = Direction::D_DOWN;
 		break;
 
+	case static_cast<unsigned int>(Direction::D_NONE):
+		exit(EXIT_SUCCESS);
+		break;
+
 	default:
 		break;
 	}
@@ -55,60 +66,43 @@ const int CPlayer::Initialize(void)
 {
 	m_bodyParts = std::vector<Vector2>();
 	m_bodyParts.push_back(*m_pPlayerPos);
-	if (m_pPickupPos == nullptr)
-		return 0;
+	return 0;
 }
 
-void CPlayer::Finalize(void)
-{
-	return void();
-}
 
 const ErrorType CPlayer::Run(void)
 {
-	//For the movement i need to loop backwards through my list to update the position from back
-	//to front. The head moves according to the InputHandler.
-	//For the pickup i need to do a -2 step, via bool. Because the snake gets longer, therefore a part doesn't move!
 
 	//Magic numbers are simply the vectors of the direction
 	switch (m_CurrentDirection)
 	{
 	case CPlayer::Direction::D_LEFT:
 		UpdatePosition(-1, 0);
-		//m_bodyParts[0].m_iX--;
-		//m_pPlayerPos->m_iX--;
 		break;
 
 	case CPlayer::Direction::D_UP:
 		UpdatePosition(0, -1);
-		//m_bodyParts[0].m_iY--;
-		//m_pPlayerPos->m_iY--;
 		break;
 
 	case CPlayer::Direction::D_RIGHT:
 		UpdatePosition(1, 0);
-		//m_bodyParts[0].m_iX++;
-		//m_pPlayerPos->m_iX++;
 		break;
 
 	case CPlayer::Direction::D_DOWN:
 		UpdatePosition(0, 1);
-		//m_bodyParts[0].m_iY++;
-		//m_pPlayerPos->m_iY++;
 		break;
 
 	case CPlayer::Direction::D_NONE:
-		
+
 
 	default:
 		break;
 	}
-
-
-
 	return ErrorType();
 }
 
+//Update position of all the body parts of the snake and elongating the
+//snake on pickup
 void CPlayer::UpdatePosition(const int& a_iXDir, const int& a_iYDir)
 {
 	auto tempPos = Vector2(m_bodyParts[m_bodyParts.size() - 1]);
@@ -119,12 +113,14 @@ void CPlayer::UpdatePosition(const int& a_iXDir, const int& a_iYDir)
 		m_bodyParts[i].m_iY = m_bodyParts[i - 1].m_iY;
 	}
 
-	m_bodyParts[0].m_iX += a_iXDir; 
+	m_bodyParts[0].m_iX += a_iXDir;
 	m_bodyParts[0].m_iY += a_iYDir;
+
+	if (m_pPickupPos == nullptr) return;
 
 	if (m_bodyParts[0].m_iX == m_pPickupPos->m_iX &&
 		m_bodyParts[0].m_iY == m_pPickupPos->m_iY) m_bIsPickupPresent = false;
-	
+
 	if (!m_bIsPickupPresent)
 	{
 		m_bodyParts.push_back(tempPos);

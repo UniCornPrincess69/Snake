@@ -29,6 +29,10 @@ const ErrorType CGame::Run(void)
 	{
 		m_pInputHandler->Run();
 		m_pGameBoard->Draw();
+		if (m_pGameBoard->CheckGameOver())
+		{
+			GameOver();
+		}
 		Sleep(500);
 	}
 	return result;
@@ -39,9 +43,14 @@ void CGame::Introduction(void)
 	auto iInputHeight = static_cast<int>(0);
 	auto iInputWidth = static_cast<int>(0);
 	std::cout << "Welcome to Snake!!!" << std::endl;
+	std::cout << "Please use the arrow keys for control!" << std::endl;
+	std::cout << "If you want to end the game just press escape." << std::endl;
+	std::cout << "Press Enter to continue" << std::endl;
+	std::cin.ignore();
+	system("CLS");
 	while (true)
 	{
-		std::cout << "Please input the Height of the Board" << std::endl;
+		std::cout << "Please input the Height of the Board(20 - 40)" << std::endl;
 		std::cin >> iInputHeight;
 		if (CheckValue(iInputHeight))
 		{
@@ -53,7 +62,7 @@ void CGame::Introduction(void)
 	system("CLS");
 	while (true)
 	{
-		std::cout << "Now please input the Width of the Board" << std::endl;
+		std::cout << "Now please input the Width of the Board(20 - 40)" << std::endl;
 		std::cin >> iInputWidth;
 		if (CheckValue(iInputWidth))
 		{
@@ -90,7 +99,12 @@ bool CGame::CheckValue(int val)
 void CGame::GameOver(void)
 {
 	system("CLS");
-
-
+	while (true)
+	{
+		std::cout << "Unfortunately you lost the game!!!" << std::endl;
+		std::cout << "Press enter to end the game!" << std::endl;
+		std::cin.ignore();
+		exit(EXIT_SUCCESS);
+	}
 }
 

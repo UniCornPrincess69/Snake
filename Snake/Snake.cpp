@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Game.h"
 #include "ErrorType.h"
+#include "Utils.h"
 
 CGame* m_pGame = nullptr;
 bool m_bGameStarted = true;
@@ -23,12 +24,7 @@ int main()
 	m_pGame->Finalize();
 
 	//Finalize
-	if (m_pGame != nullptr)
-	{
-		delete m_pGame;
-		m_pGame = nullptr;
-	}
-
+	DeletePointer(m_pGame);
 
 	return static_cast<int>(result);
 }

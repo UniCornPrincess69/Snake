@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-
+//Utility delete template from Marcus Schaal
 template<typename T>
 inline void DeletePointer(T* a_pObject)
 {

@@ -26,7 +26,7 @@ private:
 	Keycode m_iCurrent = -1;
 	const unsigned int M_I_DEFAULT = 0;
 	const unsigned int M_I_BIT = 8;
-	const unsigned int M_I_BYTE = 256;
+	const unsigned int M_I_BYTE = 81;
 	
 };
 
