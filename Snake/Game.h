@@ -10,16 +10,7 @@
 
 class CGame : IObject
 {
-	/*
-	Ctor/Dtor
-	Methoden
-	(Engine Loop/Execution Order)
-	Callbacks
-	Getter/Setter
-	Konstanten
-	Variablen
-	(Properties)
-	*/
+	
 public:
 	inline CGame(bool a_bIsGameStarted) : m_bIsRunning(a_bIsGameStarted)
 	{}
@@ -44,7 +35,6 @@ private:
 	CPlayer* m_pPlayer = nullptr;
 	CGameBoard* m_pGameBoard = nullptr;
 	CInputHandler* m_pInputHandler = nullptr;
-
 };
 
 

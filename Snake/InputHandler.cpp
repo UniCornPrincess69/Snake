@@ -35,8 +35,12 @@ const ErrorType CInputHandler::Run(void)
 	return result;
 }
 
-//Checking the status of the keys to check for input, needed for direction change.
-//Vorlesung von Marcus Schaal
+/// <summary>
+/// Checking the status of the keys to check for input, needed for direction change.
+/// Vorlesung von Marcus Schaal
+/// </summary>
+/// <param name=""></param>
+/// <returns>integer of the pressed, valid key</returns>
 const unsigned int CInputHandler::ReadKey(void) const
 {
 	for (unsigned int i = M_I_BIT; i < M_I_BYTE; i++)

@@ -40,7 +40,12 @@ void CGameBoard::Initialize(void)
 		}
 	}
 }
-//Drawing of the gameboard
+
+/// <summary>
+/// Drawing of the gameboard
+/// </summary>
+/// <param name=""></param>
+/// <returns></returns>
 ErrorType CGameBoard::Draw(void)
 {
 	system("CLS");
@@ -91,13 +96,20 @@ ErrorType CGameBoard::Draw(void)
 	return result;
 }
 
-//Setting the seed for the Pickup to be randomized
+/// <summary>
+/// Setting the seed for the Pickup to be randomized
+/// </summary>
+/// <param name="a_iSeed"></param>
 void CGameBoard::SetSeed(unsigned int a_iSeed)
 {
 	m_iSeed = a_iSeed;
 }
 
-//Check if the snake has run into the wall or itself
+/// <summary>
+/// Check if the snake has run into the wall or itself
+/// </summary>
+/// <param name=""></param>
+/// <returns></returns>
 const bool CGameBoard::CheckGameOver(void) const
 {
 	auto playerPos = m_pPlayer->GetPosition();
@@ -114,7 +126,10 @@ const bool CGameBoard::CheckGameOver(void) const
 	return false;
 }
 
-
+/// <summary>
+/// First initiation of the Gameboard
+/// </summary>
+/// <param name=""></param>
 void CGameBoard::InstantiateBoard(void)
 {
 	m_tileMap = std::vector<std::vector<TileType>>();
@@ -129,7 +144,10 @@ void CGameBoard::InstantiateBoard(void)
 	}
 }
 
-//Placing the pickup randomly with check to not place it inside of the snake body
+/// <summary>
+/// Placing the pickup randomly with check to not place it inside of the snake body
+/// </summary>
+/// <param name=""></param>
 void CGameBoard::PlacePickup(void)
 {
 	m_pPickupPos->m_iX = RandomNumber(m_iWidth);
@@ -147,6 +165,11 @@ void CGameBoard::PlacePickup(void)
 	}
 }
 
+/// <summary>
+/// Random number generator mainly for the pickup placement
+/// </summary>
+/// <param name="a_iPosCoord"></param>
+/// <returns></returns>
 const int CGameBoard::RandomNumber(int a_iPosCoord)
 {
 	srand(m_iSeed);

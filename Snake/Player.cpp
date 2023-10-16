@@ -1,27 +1,48 @@
 #include "Player.h"
-
+/// <summary>
+/// Get Vector2* of the player position
+/// </summary>
+/// <param name=""></param>
+/// <returns></returns>
 const Vector2* CPlayer::GetPosition(void) const
 {
 	return &m_bodyParts[0];
 }
 
+/// <summary>
+/// Get the vector of the whole snakebody
+/// </summary>
+/// <param name=""></param>
+/// <returns></returns>
 const std::vector<Vector2> CPlayer::GetSnakeBody(void) const
 {
 	return m_bodyParts;
 }
 
+/// <summary>
+/// Gets the bool if the pickup is present, or rather if the snake has eaten it.
+/// </summary>
+/// <param name=""></param>
+/// <returns>bool if the pickup is still present</returns>
 const bool CPlayer::GetHasPickup(void) const
 {
 	return m_bIsPickupPresent;
 }
 
+/// <summary>
+/// Setting of the bool, if snake has eaten the pickup.
+/// </summary>
+/// <param name="a_bIsPickUpPresent"></param>
 void CPlayer::SetHasPickup(const bool& a_bIsPickUpPresent)
 {
 	m_bIsPickupPresent = a_bIsPickUpPresent;
 }
 
-//Setting the direction in which the snake will move.
-//Control step so that the snake can't go back on itself.
+/// <summary>
+/// Setting the direction in which the snake will move.
+/// Control step so that the snake can't go back on itself.
+/// </summary>
+/// <param name="a_iKey"></param>
 void CPlayer::SetDirection(const unsigned int& a_iKey)
 {
 	if (m_CurrentDirection == Direction::D_UP && (Direction)a_iKey == Direction::D_DOWN) return;
@@ -56,6 +77,10 @@ void CPlayer::SetDirection(const unsigned int& a_iKey)
 	}
 }
 
+/// <summary>
+/// Set position of the player
+/// </summary>
+/// <param name="a_pos"></param>
 void CPlayer::SetPosition(Vector2& a_pos)
 {
 	if (m_pPlayerPos == nullptr) return;
@@ -101,8 +126,12 @@ const ErrorType CPlayer::Run(void)
 	return ErrorType();
 }
 
-//Update position of all the body parts of the snake and elongating the
-//snake on pickup
+/// <summary>
+/// Update position of all the body parts of the snake and elongating the
+/// snake on pickup
+/// </summary>
+/// <param name="a_iXDir">Direction along the X-axis, can be -1, 0, 1</param>
+/// <param name="a_iYDir">Direction along the Y-axis, can be -1, 0, 1</param>
 void CPlayer::UpdatePosition(const int& a_iXDir, const int& a_iYDir)
 {
 	auto tempPos = Vector2(m_bodyParts[m_bodyParts.size() - 1]);

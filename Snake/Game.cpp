@@ -38,6 +38,8 @@ const ErrorType CGame::Run(void)
 	return result;
 }
 
+//Introduction text for the game
+//User input for the size of the gameboard is asked
 void CGame::Introduction(void)
 {
 	auto iInputHeight = static_cast<int>(0);
