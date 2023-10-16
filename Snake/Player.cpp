@@ -13,7 +13,7 @@ const Vector2* CPlayer::GetPosition(void) const
 /// Get the vector of the whole snakebody
 /// </summary>
 /// <param name=""></param>
-/// <returns></returns>
+/// <returns>List of body parts</returns>
 const std::vector<Vector2> CPlayer::GetSnakeBody(void) const
 {
 	return m_bodyParts;
@@ -32,7 +32,7 @@ const bool CPlayer::GetHasPickup(void) const
 /// <summary>
 /// Setting of the bool, if snake has eaten the pickup.
 /// </summary>
-/// <param name="a_bIsPickUpPresent"></param>
+/// <param name="a_bIsPickUpPresent">Bool to be set</param>
 void CPlayer::SetHasPickup(const bool& a_bIsPickUpPresent)
 {
 	m_bIsPickupPresent = a_bIsPickUpPresent;
@@ -42,9 +42,10 @@ void CPlayer::SetHasPickup(const bool& a_bIsPickUpPresent)
 /// Setting the direction in which the snake will move.
 /// Control step so that the snake can't go back on itself.
 /// </summary>
-/// <param name="a_iKey"></param>
+/// <param name="a_iKey">Direction to move in</param>
 void CPlayer::SetDirection(const unsigned int& a_iKey)
 {
+	// This disables the players ability to walk backwards
 	if (m_CurrentDirection == Direction::D_UP && (Direction)a_iKey == Direction::D_DOWN) return;
 	if (m_CurrentDirection == Direction::D_DOWN && (Direction)a_iKey == Direction::D_UP) return;
 	if (m_CurrentDirection == Direction::D_RIGHT && (Direction)a_iKey == Direction::D_LEFT) return;
@@ -80,7 +81,7 @@ void CPlayer::SetDirection(const unsigned int& a_iKey)
 /// <summary>
 /// Set position of the player
 /// </summary>
-/// <param name="a_pos"></param>
+/// <param name="a_pos">Position to be set</param>
 void CPlayer::SetPosition(Vector2& a_pos)
 {
 	if (m_pPlayerPos == nullptr) return;

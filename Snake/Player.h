@@ -34,7 +34,6 @@ public:
 	void SetPosition(Vector2&);
 	inline void SetPickupPos(const Vector2* a_pPickupPos) { m_pPickupPos = const_cast<Vector2*>(a_pPickupPos); };
 
-	// Inherited via IObject
 	const int Initialize(void);
 	const ErrorType Run(void);
 

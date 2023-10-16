@@ -9,13 +9,13 @@ void CGameBoard::Initialize(void)
 	if (m_pPlayer != nullptr) m_pPlayer->SetPickupPos(m_pPickupPos);
 	if (m_pPlayer != nullptr) m_snakeBody = m_pPlayer->GetSnakeBody();
 
-	for (int y = 0; y < m_tileMap.size(); y++)
+	for (int x = 0; x < m_iWidth; x++)
 	{
-		for (int x = 0; x < m_tileMap[y].size(); x++)
+		for (int y = 0; y < m_iHeight; y++)
 		{
 			if (x == 0 || y == 0 ||
-				x == m_tileMap.size() - 1 ||
-				y == m_tileMap[x].size() - 1)
+				x == m_iWidth - 1 ||
+				y == m_iHeight - 1)
 			{
 				m_tileMap[x][y] = TileType::TT_WALL;
 			}
@@ -45,7 +45,7 @@ void CGameBoard::Initialize(void)
 /// Drawing of the gameboard
 /// </summary>
 /// <param name=""></param>
-/// <returns></returns>
+/// <returns>ErrorType, for debugging</returns>
 ErrorType CGameBoard::Draw(void)
 {
 	system("CLS");
@@ -60,9 +60,9 @@ ErrorType CGameBoard::Draw(void)
 		m_pPlayer->SetHasPickup(m_bIsPickupPresent);
 	}
 
-	for (int y = 0; y < m_tileMap.size(); y++)
+	for (int y = 0; y < m_iHeight; y++)
 	{
-		for (int x = 0; x < m_tileMap[y].size(); x++)
+		for (int x = 0; x < m_iWidth; x++)
 		{
 			switch (m_tileMap[x][y])
 			{
@@ -99,7 +99,7 @@ ErrorType CGameBoard::Draw(void)
 /// <summary>
 /// Setting the seed for the Pickup to be randomized
 /// </summary>
-/// <param name="a_iSeed"></param>
+/// <param name="a_iSeed">User input between 0 or 100</param>
 void CGameBoard::SetSeed(unsigned int a_iSeed)
 {
 	m_iSeed = a_iSeed;
@@ -109,13 +109,13 @@ void CGameBoard::SetSeed(unsigned int a_iSeed)
 /// Check if the snake has run into the wall or itself
 /// </summary>
 /// <param name=""></param>
-/// <returns></returns>
+/// <returns>Gameover true/false</returns>
 const bool CGameBoard::CheckGameOver(void) const
 {
 	auto playerPos = m_pPlayer->GetPosition();
 	auto bodyPos = m_pPlayer->GetSnakeBody();
 
-	if (m_tileMap[playerPos->m_iY][playerPos->m_iX] == TileType::TT_WALL) return true;
+	if (m_tileMap[playerPos->m_iX][playerPos->m_iY] == TileType::TT_WALL) return true;
 
 	for (int i = bodyPos.size() - 1; i > 0; i--)
 	{
@@ -134,12 +134,12 @@ void CGameBoard::InstantiateBoard(void)
 {
 	m_tileMap = std::vector<std::vector<TileType>>();
 
-	for (int y = 0; y < m_iWidth; y++)
+	for (int x = 0; x < m_iWidth; x++)
 	{
 		m_tileMap.push_back(std::vector<TileType>());
-		for (int x = 0; x < m_iHeight; x++)
+		for (int y = 0; y < m_iHeight; y++)
 		{
-			m_tileMap[y].push_back(TileType::TT_NONE);
+			m_tileMap[x].push_back(TileType::TT_NONE);
 		}
 	}
 }
@@ -168,8 +168,8 @@ void CGameBoard::PlacePickup(void)
 /// <summary>
 /// Random number generator mainly for the pickup placement
 /// </summary>
-/// <param name="a_iPosCoord"></param>
-/// <returns></returns>
+/// <param name="a_iPosCoord">Input for randomization</param>
+/// <returns>Randomized integer</returns>
 const int CGameBoard::RandomNumber(int a_iPosCoord)
 {
 	srand(m_iSeed);

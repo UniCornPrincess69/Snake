@@ -17,13 +17,13 @@ int main()
 	if (m_pGame == nullptr) m_pGame = new CGame(m_bGameStarted);
 	else result = ErrorType::ET_PTR_NOT_INSTANTIATED;
 	if (result != ErrorType::ET_SUCCESS) return static_cast<int>(result);
+	m_pGame->Initialize();
 
 	//Run
-	m_pGame->Initialize();
 	m_pGame->Run();
-	m_pGame->Finalize();
 
 	//Finalize
+	m_pGame->Finalize();
 	DeletePointer(m_pGame);
 
 	return static_cast<int>(result);

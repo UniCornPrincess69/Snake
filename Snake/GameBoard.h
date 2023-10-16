@@ -7,8 +7,6 @@
 #include <vector>
 
 
-//TODO: Pickup has a set position, gives it's pointer to the player and changes position after pickup.
-//TODO: std::vector for the body of the snake, iteration through the bodyparts
 class CGameBoard
 {
 	enum class TileType : char

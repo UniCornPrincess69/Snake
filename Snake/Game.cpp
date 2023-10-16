@@ -28,18 +28,21 @@ const ErrorType CGame::Run(void)
 	while (m_bIsRunning)
 	{
 		m_pInputHandler->Run();
-		m_pGameBoard->Draw();
 		if (m_pGameBoard->CheckGameOver())
 		{
 			GameOver();
 		}
+		m_pGameBoard->Draw();
 		Sleep(500);
 	}
 	return result;
 }
 
-//Introduction text for the game
-//User input for the size of the gameboard is asked
+/// <summary>
+/// Introductory text for the game
+/// User Input for board size and seeding is asked
+/// </summary>
+/// <param name=""></param>
 void CGame::Introduction(void)
 {
 	auto iInputHeight = static_cast<int>(0);
@@ -93,17 +96,29 @@ void CGame::Introduction(void)
 	m_pGameBoard->SetSeed(iSeedInput);
 }
 
+/// <summary>
+/// Checks if value is in the given range
+/// </summary>
+/// <param name="val">Value to be checked</param>
+/// <returns>True/false depending if value is in range</returns>
 bool CGame::CheckValue(int val)
 {
 	return (val < M_I_MIN || val > M_I_MAX);
 }
 
+/// <summary>
+/// Shows GameOver screen, shows snake size until game over and
+/// ends the program
+/// </summary>
+/// <param name=""></param>
 void CGame::GameOver(void)
 {
 	system("CLS");
 	while (true)
 	{
 		std::cout << "Unfortunately you lost the game!!!" << std::endl;
+		std::cout << "Your snake had a length of:" << std::endl;
+		std::cout << m_pPlayer->GetSnakeBody().size() << std::endl;
 		std::cout << "Press enter to end the game!" << std::endl;
 		std::cin.ignore();
 		exit(EXIT_SUCCESS);
